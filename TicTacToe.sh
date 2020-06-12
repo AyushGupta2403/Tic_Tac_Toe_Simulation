@@ -4,7 +4,7 @@ echo "=================WELCOME TO TIC_TAC_TOE SIMULATION================"
 declare -A board
 
 #function to reset board
-function boardReset ()
+function boardReset()
 {
 	local row=0
 	local column=0
@@ -16,6 +16,7 @@ function boardReset ()
 			board[$row,$column]=" "
 		done
 	done
+	echo "--Board Reseted--"
 }
 
 #calling board reset function
