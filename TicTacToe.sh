@@ -1,6 +1,7 @@
-###!/bin/bash -x
+#!/bin/bash -x
 
-echo "========WELCOME TO TIC TAC TOE========"
+echo "============WELCOME TO TIC TAC TOE============"
+
 #declaring dictonary
 declare -A board
 
@@ -65,12 +66,12 @@ fi
 function addAtPosition()
 {
 	if [ $(($toss%2)) == 0 ]
-	then
-		board[$1,$2]=0
-	else
-		board[$1,$2]=X
-	fi
-	winOrTie
+        then
+                board[$1,$2]=0
+        else
+                board[$1,$2]=X
+        fi
+        winOrTie
 }
 
 #function to check if there is a win or a tie
@@ -122,7 +123,7 @@ function  board()
 		do
 			printf "[""${board[$row,$column]}""]"    
 		done
-			printf "\n\n"
+			printf "\n"
 	done
 }
 
