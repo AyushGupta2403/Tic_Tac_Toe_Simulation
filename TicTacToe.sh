@@ -1,4 +1,4 @@
-#!/bin/bash -x
+###!/bin/bash -x
 echo "=================WELCOME TO TIC_TAC_TOE SIMULATION================"
 #declaring a dictonary
 declare -A board
@@ -18,6 +18,7 @@ function boardReset()
 	done
 	echo "--Board Reseted--"
 }
+boardReset
 function toss(){
 	firstPlayTurns=0
 	tossDecision=$((RANDOM%2))
@@ -49,6 +50,19 @@ function toss(){
         fi
 	echo " ";echo "Assigned Symbols";echo "Computer: $compSymbol";echo "User: $userSymbol"
 }
-#calling board reset function
-boardReset
+function printingBoard()
+{
+for ((row=0; row<3; row++))
+do
+	for ((column=0; column<3; column++))
+	do
+		board[$row,$column]=$(( count++ ))
+		printf "[""${board[$row,$column]}""]"
+	done
+	printf "\n"
+done
+}
+
+#calling function
 toss
+printingBoard
