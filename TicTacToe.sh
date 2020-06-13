@@ -18,6 +18,20 @@ function boardReset()
 	done
 	echo "--Board Reseted--"
 }
-
+function toss(){
+	tossDecision=$((RANDOM%2))
+	if [ $tossDecision -eq 1 ]
+	then
+		echo Users Turn
+                compSymbol='O'
+                userSymbol='X'
+        else
+               	echo Computers Turn
+		compSymbol='X'
+                userSymbol='O'
+        fi
+	echo " ";echo "Assigned Symbols";echo "Computer: $compSymbol";echo "User: $userSymbol"
+}
 #calling board reset function
 boardReset
+toss
