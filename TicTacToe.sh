@@ -1,8 +1,7 @@
 ###!/bin/bash -x
 
-XXXXXXXXXX	WELCOME TO TIC TAC TOE	XXXXXXXXXXX
-
-#declaring a dictonary
+echo "========WELCOME TO TIC TAC TOE========"
+#declaring dictonary
 declare -A board
 
 #variables
@@ -10,11 +9,9 @@ count=1
 end=1
 tie=0
 #constants
-head=1
-end=1
-tie=0
+HEAD=1
 
-#function to reset board
+#funtion to reset board
 function boardReset()
 {
 	local row=0
@@ -28,7 +25,7 @@ function boardReset()
 		done
 	done
 }
-#calling borad reset function
+#calling function board reset
 boardReset
 
 #cell position on the board matrix
@@ -40,24 +37,34 @@ do
 	done
 	printf "\n"
 done
-#assigning X and 0 to player1 and player2 respectively
-PLAYER1="PLAYER1"
-PLAYER2="PLAYER2"
+
+#acepting input from the user
+read -p "Single Player : 1 OR Two Player : 2 Select Option:-" playerChoice
+
+if (( $playerChoice == 1 ))
+then
+	PLAYER1="PLAYER1"
+	PLAYER2="Computer"
+else
+	PLAYER1="PLAYER1"
+	PLAYER2="PLAYER2"
+fi
+#assigning X to player1 and 0 to player2
 printf "X For $PLAYER1 \nO For $PLAYER2\n"
 
-#toss to decide who plays first randomly
+#toss to decide which player plays first
 toss=$((1+RANDOM%2))
-if (( $toss == $head ))
+if (( $toss == $HEAD ))
 then
-	printf "$PLAYER1 Is Win \n"
+	printf "$PLAYER1 Wins \n"
 else
-	printf "$PLAYER2 Is Win \n"
+	printf "$PLAYER2 Wins \n"
 fi
 
-#function to place X or 0 at a specific position
+#function to insert letter to a specfic position
 function addAtPosition()
 {
-	if [ $(($toss%2)) -eq 0 ]
+	if [ $(($toss%2)) == 0 ]
 	then
 		board[$1,$2]=0
 	else
@@ -66,10 +73,10 @@ function addAtPosition()
 	winOrTie
 }
 
-#function to check Win or a Tie
+#function to check if there is a win or a tie
 function winOrTie()
 {
-	#ROWS
+	#rowscheck
 	if [[ ${board[0,0]} == ${board[0,1]} && ${board[0,1]} == ${board[0,2]} || ${board[1,0]} == ${board[1,1]} && ${board[1,1]} == ${board[1,2]} || ${board[2,0]} == ${board[2,1]} && ${board[2,1]} == ${board[2,2]} ]]
 	then
 		whoIsWin
@@ -77,12 +84,12 @@ function winOrTie()
 	elif [[ ${board[0,0]} == ${board[1,1]} && ${board[1,1]} == ${board[2,2]} || ${board[0,2]} == ${board[1,1]} && ${board[1,1]} == ${board[2,0]} ]]
 	then
 		whoIsWin
-	#COLUMES
+	#columnscheck
 	elif [[ ${board[0,1]} == ${board[1,0]} && ${board[1,0]} == ${board[2,0]} || ${board[0,1]} == ${board[1,1]} && ${board[1,1]} == ${board[2,1]} || ${board[0,2]} == ${board[1,2]} && ${board[1,2]} == ${board[2,2]} ]]
 	then
 		whoIsWin
 	fi
-	# TIE
+	#tie
 	(( tie++ ))
 	if (( $tie == 9 ))
 	then
@@ -92,7 +99,7 @@ function winOrTie()
 	fi
 }
 
-#function to check winner between player1 and player2
+#function to check who is the winner
 function whoIsWin()
 {
 	board
@@ -106,7 +113,7 @@ function whoIsWin()
 	fi
 }
 
-#function to call board to choose  a cell
+#printing Board to insert letter at specific cell position
 function  board()
 {
 	for ((row=0; row<3; row++))
@@ -115,18 +122,69 @@ function  board()
 		do
 			printf "[""${board[$row,$column]}""]"    
 		done
-			printf "\n"
+			printf "\n\n"
 	done
 }
 
-#looping till a player wins or there is a tie
+#function to include computer as a player
+function computer()
+{
+	if [[ ${board[1,0]} == ${board[2,0]} || ${board[0,1]} == ${board[0,2]} || ${board[1,1]} == ${board[2,2]} ]]
+	then
+		addAtPosition 0 0
+	elif [[ ${board[0,0]} == ${board[0,2]} || ${board[1,1]} == ${board[2,1]} ]]
+	then
+		addAtPosition 0 1
+	elif [[ ${board[0,0]} == ${board[0,1]} || ${board[1,2]} == ${board[2,2]} || ${board[1,1]} == ${board[2,0]} ]]
+	then
+		addAtPosition 0 2
+	elif [[ ${board[0,0]} == ${board[0,2]} || ${board[1,1]} == ${board[1,2]} ]]
+	then
+		addAtPosition 1 0
+	elif [[ ${board[1,0]} == ${board[1,2]} || ${board[0,1]} == ${board[2,1]} || ${board[0,0]} == ${board[2,2]} || ${board[0,2]} == ${board[2,0]} ]]
+	then
+		addAtPosition 1 1
+	elif [[ ${board[1,0]} == ${board[1,1]} || ${board[0,2]} == ${board[2,2]} ]]
+	then
+		addAtPosition 1 2
+	elif [[ ${board[0,0]} == ${board[1,0]} || ${board[2,1]} == ${board[2,2]} || ${board[0,2]} == ${board[1,1]} ]]
+	then
+		addAtPosition 2 0
+	elif [[ ${board[2,0]} == ${board[2,2]} || ${board[1,1]} == ${board[0,1]} ]]
+	then
+		addAtPosition 2 1
+	elif [[ ${board[2,0]} == ${board[2,1]} || ${board[0,2]} == ${board[1,2]} || ${board[0,0]} == ${board[1,1]} ]]
+	then
+		addAtPosition 2 2
+	else
+		randomPosition1=$((RANDOM%3))
+		randomPosition2=$((RANDOM%3))
+		while [[ ${board[$randomPosition1,$randomPosition2]} == 0 ||  ${board[$randomPosition1,$randomPosition2]} == X ]]
+		do
+			randomPosition1=$((RANDOM%3))
+			randomPosition2=$((RANDOM%3))
+		done
+		addAtPosition $randomPosition1 $randomPosition2
+	fi
+}
+
+#looping till a player wins or reaches a tie condition
 while (( $end != 0 ))
 do
 	board
 	if (( $(($toss%2)) == 0 ))
 	then
-		read -p "$PLAYER2 Enter A Position" choice
-	else
+		if (( $playerChoice == 1 ))
+		then
+			computer
+			printf "\n"
+			board
+		else
+			read -p "$PLAYER2 Enter A Position" choice
+		fi
+	fi
+	if (( $(($toss%2)) == 1 ))
+	then
 		read -p "$PLAYER1 Enter A Position" choice
 	fi
 	((toss++))
