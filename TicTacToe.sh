@@ -26,9 +26,9 @@ function boardReset()
 		done
 	done
 }
+
 #calling function to reset board
 boardReset
-
 #cell position on the board matrix
 for ((row=0; row<3; row++))
 do
