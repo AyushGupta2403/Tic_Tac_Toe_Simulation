@@ -11,7 +11,6 @@ end=1
 tie=0
 #constants
 HEAD=1
-
 #function to reset board
 function boardReset()
 {
@@ -80,7 +79,7 @@ function addAtPosition()
 	fi
 }
 
-#function to check if there is a win or a tie
+#function to check if there is a winner or a tie
 function winOrTie()
 {
 	#rowscheck
@@ -178,7 +177,6 @@ function computer()
 		addAtPosition $randomPosition1 $randomPosition2
 	fi
 }
-
 #looping till a player wins or reaches a tie condition
 while (( $end != 0 ))
 do
