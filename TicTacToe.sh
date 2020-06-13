@@ -11,6 +11,7 @@ end=1
 tie=0
 #constants
 HEAD=1
+
 #function to reset board
 function boardReset()
 {
@@ -49,6 +50,7 @@ else
 	PLAYER1="PLAYER1"
 	PLAYER2="PLAYER2"
 fi
+
 #assigning X to player1 and 0 to player2
 printf "X For $PLAYER1 \nO For $PLAYER2\n"
 
@@ -100,7 +102,7 @@ function winOrTie()
 	if (( $tie == 9 ))
 	then
 		board
-		printf "Match is Tie\n"
+		printf "Tie\n"
 		end=0
 	fi
 }
@@ -177,6 +179,7 @@ function computer()
 		addAtPosition $randomPosition1 $randomPosition2
 	fi
 }
+
 #looping till a player wins or reaches a tie condition
 while (( $end != 0 ))
 do
