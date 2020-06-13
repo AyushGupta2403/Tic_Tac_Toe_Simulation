@@ -19,16 +19,33 @@ function boardReset()
 	echo "--Board Reseted--"
 }
 function toss(){
+	firstPlayTurns=0
 	tossDecision=$((RANDOM%2))
 	if [ $tossDecision -eq 1 ]
 	then
-		echo Users Turn
-                compSymbol='O'
-                userSymbol='X'
-        else
-               	echo Computers Turn
-		compSymbol='X'
-                userSymbol='O'
+		firstPlayTurns=1
+		echo "Computer Won Toss"
+		symbol=$((RANDOM%2))
+                if [ $symbol -eq 1 ]
+                then
+                        compSymbol='X'
+                        userSymbol='O'
+                else
+                        compSymbol='O'
+                        userSymbol='X'
+                fi
+	else
+		firstPlayTurns=2
+		echo "User won toss"
+		read -p "Enter 1 for 'X' symbol and 2 for 'O' symbol: " symbol
+                if [ $symbol -eq 1 ]
+                then
+                        userSymbol='X'
+                        compSymbol='O'
+                else
+                        userSymbol='O'
+                        compSymbol='X'
+                fi
         fi
 	echo " ";echo "Assigned Symbols";echo "Computer: $compSymbol";echo "User: $userSymbol"
 }
